@@ -1,0 +1,12 @@
+{
+  "name": "complexicon",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "start:frontend": "npm run dev --workspace=@complexicon/frontend",
+    "start:backend": "npm start --workspace=@complexicon/backend",
+    "dev": "concurrently \"npm:start:frontend\" \"npm:start:backend\""
+  }
+}
