@@ -8,5 +8,12 @@
     "start:frontend": "npm run dev --workspace=@complexicon/frontend",
     "start:backend": "npm start --workspace=@complexicon/backend",
     "dev": "concurrently \"npm:start:frontend\" \"npm:start:backend\""
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.7",
+    "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "dotenv": "^18.0.9"
   }
 }
