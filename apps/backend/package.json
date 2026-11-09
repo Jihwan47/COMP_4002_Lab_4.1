@@ -2,9 +2,19 @@
   "name": "@complexicon/backend",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
-    "start": "tsx watch src/server.ts",
-    "build": "tsc --noEmit"
+    "start": "ts-node src/server.ts"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/morgan": "^1.9.10",
+    "@types/node": "^24.19.2",
+    "ts-node": "^10.9.2"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.3.0",
+    "morgan": "^1.12.1"
   }
 }
