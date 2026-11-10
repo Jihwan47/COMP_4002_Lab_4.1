@@ -21,6 +21,7 @@ app.get("/", (_req, res) => {
 app. use("/api/v1/roles", roleRoutes);
 app.use("/api/v1/departments", departmentRoutes);
 
+// handles errors
 app.use(errorHandler);
 
 export default app;
