@@ -1,0 +1,38 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// Employee table
+model Employee {
+  id             String       @id   @default(uuid()) //Primary Key of Employee
+  firstName      String
+  lastName       String?
+
+  departmentId   String?      //pointing dpet id in department
+
+}
+
+// Department table
+model Department {
+  id             String       @id   @default(uuid())
+  name       String
+}
+
+// Role table
+model Role {
+  id             String       @id   @default(uuid())
+  title          String
+  employeeId     String?      // points to the employee id in Employee
+}
