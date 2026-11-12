@@ -1,33 +1,39 @@
-import { Guid } from 'guid-typescript';
-import type { Department } from '@shared/types/department';
-import type { Employee } from '@shared/types/employee';
-import { departmentData } from '../../../data/departments';
+import prisma from "../../../../prisma/client";
 
 // return every department in the departmentData array
-export function getAllDepartments(): Department[] {
-    return departmentData;
+export async function getAllDepartments() {
+    
+    // get all rows from department table
+    const departments = await prisma.department.findMany({ orderBy: { name: "asc" } });
+    // get all rows from employee table
+    const employees = await prisma.employee.findMany();
+
+    // return a new department array with the employee object included
+    return departments.map(( departmaent ) => ({
+        // find every column of the department
+        ...departmaent,
+        // find the employees with the same departmentId, if not found, return empty array
+        employees: employees.filter((e) => e.departmentId === departmaent.id)
+    }));
 }
 
 // return a department by name, or undefined if not found
-export function getDepartmentByName( departmentName: string ): Department | undefined {
-    return departmentData.find( (d) => d.name === departmentName );
+export async function getDepartmentByName( name: string ) {
+    // get the first department with the same name
+    return prisma.department.findFirst({ where: { name } });
+
 }
 
 // createEmployee function to add a new employee to a department
-export function createDepartment( departmentName: string, firstName: string, lastName: string ): Employee {
+export async function createEmployee( departmentName: string, firstName: string, lastName: string ) {
 
-    const department = getDepartmentByName( departmentName );
+    // look upthe departmentW
+    const department = await getDepartmentByName(departmentName);
 
+    // validate whether the department exists, if not throw an error
     if ( !department ) {
-        throw new Error( `Department with name ${departmentName} not found` );
+        throw new Error (`Department ${departmentName} does not exist`);
     }
-
-    const newEmployee: Employee = {
-        id: Guid.create().toString(),
-        firstName,
-        lastName
-    };
-    
-    department.employees.push( newEmployee );
-    return newEmployee;
+    // return the employee row and store the department's id in that row
+    return prisma.employee.create({ data: { firstName, lastName, departmentId: department.id } });
 }
