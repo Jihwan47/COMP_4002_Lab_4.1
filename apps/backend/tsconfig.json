@@ -10,11 +10,12 @@
       "baseUrl": "./",
       "sourceMap": true,
       "lib": ["ESNext"],
+      "types": ["node", "jest"],
       "paths": {
         "@shared/*": ["../../shared/*"],
         "*": ["*"]
       }
     },
-    "include": ["src/**/*", "tests/**/*"],
+    "include": ["src/**/*", "tests/**/*", "prisma7.config.ts", "prisma7.schema"],
     "exclude": ["node_modules", "dist"]
 }
